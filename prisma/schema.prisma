@@ -1,0 +1,70 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Booking {
+  id                String              @id
+  guestId           String              @map("guest_id")
+  propertyId        String              @map("property_id")
+  checkIn           DateTime            @map("check_in")
+  checkOut          DateTime            @map("check_out")
+  value             Decimal
+  status            BookingStatus       @default(CONFIRMED)
+  createdAt         DateTime            @map("created_at")    @default(now())
+  updatedAt         DateTime            @map("updated_at")    @updatedAt
+  guest             Guest               @relation(fields: [guestId], references: [id])
+  property          Property            @relation(fields: [propertyId], references: [id])
+  units             BookingToUnits[]
+  @@map("bookings")
+}
+
+model BookingToUnits {
+  bookingId         String              @map("booking_id")
+  unitId            String              @map("unit_id")
+  booking           Booking             @relation(fields: [bookingId], references: [id])
+  unit              Unit                @relation(fields: [unitId], references: [id])
+  @@id([bookingId, unitId])
+  @@map("bookings_to_units")
+}
+
+model Guest {
+  id                String              @id
+  name              String    
+  email             String
+  phoneNumber       String              @map("phone_number")
+  bookings          Booking[]
+  @@map("guests")
+}
+
+model Property {
+  id                String              @id
+  name              String              @unique
+  bookings          Booking[]
+  units             Unit[]
+  @@map("properties")
+}
+
+model Unit {
+  id                String              @id
+  name              String
+  propertyId        String              @map("property_id")
+  property          Property            @relation(fields: [propertyId], references: [id])
+  bookings          BookingToUnits[]
+  @@map("units")
+}
+
+enum BookingStatus {
+  CONFIRMED
+  CANCELLED
+}
