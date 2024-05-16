@@ -9,7 +9,11 @@ COPY tsconfig.json .
 
 RUN npm install
 
+COPY prisma ./prisma
+
 COPY . .
+
+RUN npx prisma generate
 
 RUN npm run build
 
@@ -23,5 +27,7 @@ COPY package*.json .
 RUN npm install --omit=dev
 
 COPY --from=builder /usr/app/dist ./dist
+
+COPY prisma ./prisma
 
 CMD ["node", "dist/main.js"]
