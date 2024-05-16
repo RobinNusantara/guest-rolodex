@@ -19,7 +19,7 @@ services:
     #Database
     guest_rolodex_db:
         image: mysql
-        container_name: db_mysql
+        container_name: guest_rolodex_db
         ports:
             - ${MYSQL_PORT}:${MYSQL_PORT}
         environment:
@@ -27,4 +27,7 @@ services:
             - MYSQL_USER=${MYSQL_USER}
             - MYSQL_PASSWORD=${MYSQL_PASSWORD}
             - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-
+        volumes:
+            - guest-rolodex-db:/var/lib/mysql
+volumes:
+    guest-rolodex-db:
