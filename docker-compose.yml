@@ -1,0 +1,30 @@
+version: '3.9'
+services:
+    #Application
+    guest_rolodex_app:
+        container_name: guest_rolodex
+        build:
+            context: .
+            dockerfile: Dockerfile
+            target: builder
+        command:
+            npm run start:dev
+        volumes:
+            - ./:/usr/app 
+        ports:
+            - ${PORT}:${PORT} 
+        depends_on:
+            - guest_rolodex_db
+        restart: on-failure
+    #Database
+    guest_rolodex_db:
+        image: mysql
+        container_name: db_mysql
+        ports:
+            - ${MYSQL_PORT}:${MYSQL_PORT}
+        environment:
+            - MYSQL_DATABASE=${MYSQL_DATABASE}
+            - MYSQL_USER=${MYSQL_USER}
+            - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+            - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+

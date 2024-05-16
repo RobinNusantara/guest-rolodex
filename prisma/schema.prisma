@@ -17,6 +17,7 @@ model Booking {
   id                String              @id
   guestId           String              @map("guest_id")
   propertyId        String              @map("property_id")
+  invoiceId         String              @map("invoice_id")
   checkIn           DateTime            @map("check_in")
   checkOut          DateTime            @map("check_out")
   value             Decimal
