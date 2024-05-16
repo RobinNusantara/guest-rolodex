@@ -1,5 +1,5 @@
 #Builder
-FROM node:16-alpine AS builder
+FROM node:20-alpine AS builder
 
 WORKDIR /usr/app
 
@@ -18,7 +18,7 @@ RUN npx prisma generate
 RUN npm run build
 
 #Production
-FROM node:16-alpine AS prod
+FROM node:20-alpine AS prod
 
 WORKDIR /usr/app
 
