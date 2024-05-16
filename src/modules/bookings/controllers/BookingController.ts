@@ -1,12 +1,12 @@
-import { Controller, Get } from '@nestjs/common';
-import { BookingService } from 'src/modules/bookings/services/BookingService';
+import { Controller, Get } from "@nestjs/common";
+import { BookingService } from "src/modules/bookings/services/BookingService";
 
-@Controller('bookings')
+@Controller("bookings")
 export class BookingController {
-  constructor(private readonly bookingService: BookingService) {}
+    constructor(private readonly bookingService: BookingService) {}
 
-  @Get()
-  getBookings(): string {
-    return this.bookingService.getBookings();
-  }
+    @Get()
+    getBookings(): string {
+        return this.bookingService.getBookings();
+    }
 }

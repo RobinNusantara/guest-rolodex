@@ -2,7 +2,7 @@ version: '3.9'
 services:
     #Application
     guest_rolodex_app:
-        container_name: guest_rolodex
+        container_name: guest_rolodex_app
         build:
             context: .
             dockerfile: Dockerfile
@@ -12,22 +12,28 @@ services:
         volumes:
             - ./:/usr/app 
         ports:
-            - ${PORT}:${PORT} 
+            - ${PORT}:${PORT}
+        networks:
+            - guest-rolodex-net
         depends_on:
             - guest_rolodex_db
         restart: on-failure
     #Database
     guest_rolodex_db:
-        image: mysql
+        image: mysql:latest
         container_name: guest_rolodex_db
         ports:
             - ${MYSQL_PORT}:${MYSQL_PORT}
         environment:
             - MYSQL_DATABASE=${MYSQL_DATABASE}
-            - MYSQL_USER=${MYSQL_USER}
             - MYSQL_PASSWORD=${MYSQL_PASSWORD}
             - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+        networks:
+            - guest-rolodex-net
         volumes:
-            - guest-rolodex-db:/var/lib/mysql
+            - guest-rolodex-rdb:/var/lib/mysql
+networks:
+    guest-rolodex-net:
+        driver: bridge
 volumes:
-    guest-rolodex-db:
+    guest-rolodex-rdb:
