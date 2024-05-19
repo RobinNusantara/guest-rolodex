@@ -2,6 +2,11 @@ import { Module } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { BookingModel } from "src/models/Booking/BookingModel";
+import { BookingToUnitModel } from "src/models/Booking/BookingToUnitModel";
+import { GuestModel } from "src/models/Guest/GuestModel";
+import { PayoutModel } from "src/models/Payout/PayoutModel";
+import { PropertyModel } from "src/models/Property/PropertyModel";
+import { UnitModel } from "src/models/Unit/UnitModel";
 
 @Module({
     imports: [
@@ -15,7 +20,14 @@ import { BookingModel } from "src/models/Booking/BookingModel";
                 username: configService.getOrThrow("MYSQL_USERNAME"),
                 password: configService.getOrThrow("MYSQL_PASSWORD"),
                 synchronize: configService.getOrThrow("MYSQL_SYNCHRONIZE"),
-                entities: [BookingModel],
+                entities: [
+                    BookingModel,
+                    BookingToUnitModel,
+                    GuestModel,
+                    PayoutModel,
+                    PropertyModel,
+                    UnitModel,
+                ],
             }),
         }),
     ],
