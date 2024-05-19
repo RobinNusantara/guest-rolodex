@@ -2,9 +2,18 @@ import {
     Column,
     CreateDateColumn,
     Entity,
+    JoinColumn,
+    JoinTable,
+    ManyToMany,
+    ManyToOne,
+    OneToMany,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from "typeorm";
+import { PropertyModel } from "../Property/PropertyModel";
+import { GuestModel } from "../Guest/GuestModel";
+import { PayoutModel } from "../Payout/PayoutModel";
+import { UnitModel } from "../Unit/UnitModel";
 
 export enum BookingStatus {
     Confirmed = "Confirmed",
@@ -79,4 +88,40 @@ export class BookingModel {
         type: "timestamp",
     })
     updatedAt: Date;
+
+    @OneToMany(() => PayoutModel, (payout) => payout.booking)
+    payouts: Array<PayoutModel>;
+
+    @ManyToOne(() => GuestModel, (guest) => guest.bookings)
+    @JoinColumn({
+        name: "guest_id",
+        referencedColumnName: "id",
+        foreignKeyConstraintName: "fk_guests_guest_id",
+    })
+    guest: GuestModel;
+
+    @ManyToOne(() => PropertyModel, (property) => property.bookings)
+    @JoinColumn({
+        name: "property_id",
+        referencedColumnName: "id",
+        foreignKeyConstraintName: "fk_bookings_property_id",
+    })
+    property: PropertyModel;
+
+    @ManyToMany(() => UnitModel)
+    @JoinTable({
+        name: "booking_to_units",
+        joinColumn: {
+            name: "booking_id",
+            referencedColumnName: "id",
+            foreignKeyConstraintName: "fk_booking_to_units_booking_id",
+        },
+        inverseJoinColumn: {
+            name: "unit_id",
+            referencedColumnName: "id",
+            foreignKeyConstraintName: "fk_booking_to_units_unit_id",
+        },
+        synchronize: false,
+    })
+    units: Array<UnitModel>;
 }

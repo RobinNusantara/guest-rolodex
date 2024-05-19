@@ -2,9 +2,11 @@ import {
     Column,
     CreateDateColumn,
     Entity,
+    OneToMany,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from "typeorm";
+import { BookingModel } from "../Booking/BookingModel";
 
 @Entity({ name: "guests" })
 export class GuestModel {
@@ -44,4 +46,7 @@ export class GuestModel {
         type: "timestamp",
     })
     updatedAt: Date;
+
+    @OneToMany(() => BookingModel, (booking) => booking.guest)
+    bookings: Array<BookingModel>;
 }

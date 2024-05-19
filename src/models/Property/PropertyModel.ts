@@ -2,9 +2,12 @@ import {
     Column,
     CreateDateColumn,
     Entity,
+    OneToMany,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from "typeorm";
+import { BookingModel } from "../Booking/BookingModel";
+import { UnitModel } from "../Unit/UnitModel";
 
 @Entity({ name: "properties" })
 export class PropertyModel {
@@ -30,4 +33,10 @@ export class PropertyModel {
         type: "timestamp",
     })
     updatedAt: Date;
+
+    @OneToMany(() => BookingModel, (booking) => booking.property)
+    bookings: Array<BookingModel>;
+
+    @OneToMany(() => UnitModel, (unit) => unit.property)
+    units: Array<UnitModel>;
 }

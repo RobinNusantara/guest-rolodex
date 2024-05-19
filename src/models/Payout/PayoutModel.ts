@@ -2,9 +2,12 @@ import {
     Column,
     DeleteDateColumn,
     Entity,
+    JoinColumn,
+    ManyToOne,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from "typeorm";
+import { BookingModel } from "../Booking/BookingModel";
 
 @Entity({ name: "payouts" })
 export class PayoutModel {
@@ -46,4 +49,12 @@ export class PayoutModel {
         type: "timestamp",
     })
     updatedAt: Date;
+
+    @ManyToOne(() => BookingModel, (booking) => booking.payouts)
+    @JoinColumn({
+        name: "booking_id",
+        referencedColumnName: "id",
+        foreignKeyConstraintName: "fk_payouts_booking_id",
+    })
+    booking: BookingModel;
 }
