@@ -237,6 +237,12 @@ export class M202405201716140142250 implements MigrationInterface {
                         generationStrategy: "increment",
                     },
                     {
+                        name: "booking_id",
+                        type: "varchar",
+                        length: "45",
+                        isNullable: false,
+                    },
+                    {
                         name: "name",
                         type: "varchar",
                         length: "255",
