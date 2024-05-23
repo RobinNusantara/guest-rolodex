@@ -27,7 +27,7 @@ export class BookingModel {
 
     @Column({
         name: "guest_id",
-        type: "uuid",
+        type: "varchar",
         nullable: false,
     })
     guestId: string;
