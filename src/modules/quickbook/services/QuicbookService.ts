@@ -101,7 +101,7 @@ export class QuickbookService {
         const accessToken = quickbook.accessToken;
 
         const config = {
-            url: `https://sandbox-quickbooks.api.intuit.com/${realmId}/${args.path}`,
+            url: `https://sandbox-quickbooks.api.intuit.com/v3/company/${realmId}/${args.path}`,
             method: args.method,
             headers: {
                 Authorization: `Bearer ${accessToken}`,
@@ -123,7 +123,7 @@ export class QuickbookService {
         return await axios.request(config);
     }
 
-    protected async get(path: string, params?: object): Promise<any> {
+    public async get(path: string, params?: object): Promise<any> {
         return await this.makeApiCall({
             method: "get",
             path,
@@ -131,7 +131,7 @@ export class QuickbookService {
         });
     }
 
-    protected async post(
+    public async post(
         path: string,
         data: object,
         params?: object,
@@ -144,7 +144,7 @@ export class QuickbookService {
         });
     }
 
-    protected async put(
+    public async put(
         path: string,
         data: object,
         params?: object,
@@ -157,7 +157,11 @@ export class QuickbookService {
         });
     }
 
-    async patch(path: string, data: object, params?: object): Promise<any> {
+    public async patch(
+        path: string,
+        data: object,
+        params?: object,
+    ): Promise<any> {
         return await this.makeApiCall({
             method: "patch",
             path,
@@ -166,7 +170,7 @@ export class QuickbookService {
         });
     }
 
-    async delete(path: string, params?: object): Promise<any> {
+    public async delete(path: string, params?: object): Promise<any> {
         return await this.makeApiCall({
             method: "delete",
             path,
