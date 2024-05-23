@@ -6,6 +6,7 @@ import { BookingToUnitModel } from "src/models/Booking/BookingToUnitModel";
 import { GuestModel } from "src/models/Guest/GuestModel";
 import { PayoutModel } from "src/models/Payout/PayoutModel";
 import { PropertyModel } from "src/models/Property/PropertyModel";
+import { QuickbookModel } from "src/models/Quickbook/QuicbookModel";
 import { UnitModel } from "src/models/Unit/UnitModel";
 
 @Module({
@@ -27,6 +28,7 @@ import { UnitModel } from "src/models/Unit/UnitModel";
                     PayoutModel,
                     PropertyModel,
                     UnitModel,
+                    QuickbookModel,
                 ],
             }),
         }),
