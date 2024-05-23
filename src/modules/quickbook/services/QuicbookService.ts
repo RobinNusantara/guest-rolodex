@@ -4,6 +4,7 @@ import { Cron, CronExpression } from "@nestjs/schedule";
 import { InjectRepository } from "@nestjs/typeorm";
 import axios from "axios";
 import * as OAuthClient from "intuit-oauth";
+import { IMakeApiCall } from "src/common/interfaces/IMakeApiCall";
 import { QuickbookModel } from "src/models/Quickbook/QuicbookModel";
 import { Repository } from "typeorm";
 
@@ -85,5 +86,91 @@ export class QuickbookService {
         this.logger.log("[QBO Auth] Token Updated!");
 
         return response.data;
+    }
+
+    private async makeApiCall(args: IMakeApiCall): Promise<any> {
+        const params = !args?.params ? null : args.params;
+
+        const quickbook = await this.quickbookRepository.findOne({
+            where: {
+                id: 1,
+            },
+        });
+
+        const realmId = this.configService.get("QUICKBOOK_REALM_ID");
+        const accessToken = quickbook.accessToken;
+
+        const config = {
+            url: `https://sandbox-quickbooks.api.intuit.com/${realmId}/${args.path}`,
+            method: args.method,
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        };
+
+        if (params !== null) {
+            Object.assign(config, {
+                params,
+            });
+        }
+
+        if (["post", "put", "patch"].includes(args.method)) {
+            Object.assign(config, {
+                data: args?.data,
+            });
+        }
+
+        return await axios.request(config);
+    }
+
+    protected async get(path: string, params?: object): Promise<any> {
+        return await this.makeApiCall({
+            method: "get",
+            path,
+            params,
+        });
+    }
+
+    protected async post(
+        path: string,
+        data: object,
+        params?: object,
+    ): Promise<any> {
+        return await this.makeApiCall({
+            method: "post",
+            path,
+            params,
+            data,
+        });
+    }
+
+    protected async put(
+        path: string,
+        data: object,
+        params?: object,
+    ): Promise<any> {
+        return await this.makeApiCall({
+            method: "put",
+            path,
+            params,
+            data,
+        });
+    }
+
+    async patch(path: string, data: object, params?: object): Promise<any> {
+        return await this.makeApiCall({
+            method: "patch",
+            path,
+            params,
+            data,
+        });
+    }
+
+    async delete(path: string, params?: object): Promise<any> {
+        return await this.makeApiCall({
+            method: "delete",
+            path,
+            params,
+        });
     }
 }
