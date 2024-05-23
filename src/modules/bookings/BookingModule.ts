@@ -5,6 +5,8 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { BookingModel } from "src/models/Booking/BookingModel";
 import { GuestModel } from "src/models/Guest/GuestModel";
 import { BookingToUnitModel } from "src/models/Booking/BookingToUnitModel";
+import { QuickbookService } from "../quickbook/services/QuicbookService";
+import { QuickbookModel } from "src/models/Quickbook/QuicbookModel";
 
 @Module({
     imports: [
@@ -12,9 +14,10 @@ import { BookingToUnitModel } from "src/models/Booking/BookingToUnitModel";
             BookingModel,
             GuestModel,
             BookingToUnitModel,
+            QuickbookModel,
         ]),
     ],
     controllers: [BookingController],
-    providers: [BookingService],
+    providers: [BookingService, QuickbookService],
 })
 export class BookingModule {}
