@@ -86,12 +86,14 @@ export class M202405201716140142250 implements MigrationInterface {
                         name: "name",
                         type: "varchar",
                         length: "255",
+                        isUnique: true,
                         isNullable: false,
                     },
                     {
                         name: "email",
                         type: "varchar",
                         length: "255",
+                        isUnique: true,
                         isNullable: false,
                     },
                     {
@@ -204,9 +206,10 @@ export class M202405201716140142250 implements MigrationInterface {
                         generationStrategy: "increment",
                     },
                     {
-                        name: "booking_id",
+                        name: "name",
                         type: "varchar",
-                        length: "45",
+                        length: "255",
+                        isUnique: true,
                         isNullable: false,
                     },
                     {
