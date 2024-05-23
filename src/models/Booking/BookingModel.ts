@@ -49,6 +49,7 @@ export class BookingModel {
     @Column({
         type: "enum",
         enum: BookingStatus,
+        enumName: "booking_status",
         default: BookingStatus.Confirmed,
         nullable: false,
     })
