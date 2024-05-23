@@ -19,7 +19,7 @@ import { UnitModel } from "src/models/Unit/UnitModel";
                 database: configService.getOrThrow("MYSQL_DATABASE"),
                 username: configService.getOrThrow("MYSQL_USERNAME"),
                 password: configService.getOrThrow("MYSQL_PASSWORD"),
-                synchronize: configService.getOrThrow("MYSQL_SYNCHRONIZE"),
+                synchronize: false,
                 entities: [
                     BookingModel,
                     BookingToUnitModel,
