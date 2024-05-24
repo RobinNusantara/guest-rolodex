@@ -9,7 +9,7 @@ import { QuicbookRepository } from "../repositories/QuickbookRepository";
 @Injectable()
 export class QuickbookService {
     private oauthClient: any;
-    private readonly logger = new Logger(QuickbookService.name);
+    private _logger = new Logger(QuickbookService.name);
 
     constructor(
         private readonly quickbookRepository: QuicbookRepository,
@@ -40,7 +40,7 @@ export class QuickbookService {
 
     @Cron(CronExpression.EVERY_5_MINUTES)
     private async token(): Promise<any> {
-        this.logger.log("[QBO Auth] Run");
+        this._logger.log("[QBO Auth] Run");
 
         const quickbook = await this.quickbookRepository.findOne({
             where: {
@@ -49,7 +49,7 @@ export class QuickbookService {
         });
 
         if (!quickbook) {
-            this.logger.error("[QBO Auth] Token Not Found!");
+            this._logger.error("[QBO Auth] Token Not Found!");
             return;
         }
 
@@ -70,7 +70,7 @@ export class QuickbookService {
         });
 
         if (!quickbook) {
-            this.logger.error("[QBO Auth] Failed to Retrieve Token!");
+            this._logger.error("[QBO Auth] Failed to Retrieve Token!");
             return;
         }
 
@@ -80,7 +80,7 @@ export class QuickbookService {
             refreshToken: response.data["refresh_token"],
         });
 
-        this.logger.log("[QBO Auth] Token Updated!");
+        this._logger.log("[QBO Auth] Token Updated!");
 
         return response.data;
     }
@@ -120,7 +120,7 @@ export class QuickbookService {
         return await axios.request(config);
     }
 
-    public async get(path: string, params?: object): Promise<any> {
+    protected async get(path: string, params?: object): Promise<any> {
         return await this.makeApiCall({
             method: "get",
             path,
@@ -128,7 +128,7 @@ export class QuickbookService {
         });
     }
 
-    public async post(
+    protected async post(
         path: string,
         data: object,
         params?: object,
@@ -141,7 +141,7 @@ export class QuickbookService {
         });
     }
 
-    public async put(
+    protected async put(
         path: string,
         data: object,
         params?: object,
@@ -154,7 +154,7 @@ export class QuickbookService {
         });
     }
 
-    public async patch(
+    protected async patch(
         path: string,
         data: object,
         params?: object,
@@ -167,7 +167,7 @@ export class QuickbookService {
         });
     }
 
-    public async delete(path: string, params?: object): Promise<any> {
+    protected async delete(path: string, params?: object): Promise<any> {
         return await this.makeApiCall({
             method: "delete",
             path,
