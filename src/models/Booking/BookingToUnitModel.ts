@@ -24,7 +24,7 @@ export class BookingToUnitModel {
         type: "int",
         nullable: false,
     })
-    unitId: string;
+    unitId: number;
 
     @CreateDateColumn({
         name: "created_at",
