@@ -12,5 +12,5 @@ export class InsertBookingDto {
 
     property: Pick<PropertyDto, "id">;
 
-    units: Array<string>;
+    units: Array<number>;
 }
