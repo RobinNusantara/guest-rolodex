@@ -7,13 +7,14 @@ import { BookingToUnitModel } from "src/models/Booking/BookingToUnitModel";
 import { BookingRepository } from "./repositories/BookingRepository";
 import { GuestRepository } from "../guests/repositories/GuestRepository";
 import { BookingToUnitRepository } from "./repositories/BookingToUnitRepository";
-import { QuicbookRepository } from "../quickbook/repositories/QuickbookRepository";
 /** Services */
 import { BookingService } from "./services/BookingService";
-import { QuickbookService } from "../quickbook/services/QuicbookService";
 import { GuestService } from "../guests/services/GuestService";
+import { MidtransPaymentService } from "../midtrans/services/MidtransPaymentService";
 /** Controllers */
 import { BookingController } from "./controllers/BookingController";
+import { UnitService } from "../units/services/UnitService";
+import { UnitRepository } from "../units/repositories/UnitRepository";
 
 @Module({
     imports: [TypeOrmModule.forFeature([BookingModel, BookingToUnitModel])],
@@ -22,12 +23,13 @@ import { BookingController } from "./controllers/BookingController";
         /** Services */
         BookingService,
         GuestService,
-        QuickbookService,
+        UnitService,
+        MidtransPaymentService,
         /** Repositories */
         BookingRepository,
         BookingToUnitRepository,
+        UnitRepository,
         GuestRepository,
-        QuicbookRepository,
     ],
     controllers: [BookingController],
 })
