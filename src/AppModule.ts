@@ -2,9 +2,9 @@ import { Module } from "@nestjs/common";
 import { BookingModule } from "./modules/bookings/BookingModule";
 import { DatabaseModule } from "./infrastructures/database/DatabaseModule";
 import { ConfigModule } from "@nestjs/config";
-import { QuickbookModule } from "./modules/quickbook/QuickbookModule";
 import { ScheduleModule } from "@nestjs/schedule";
 import { GuestModule } from "./modules/guests/GuestModule";
+import { MidtransModule } from "./modules/midtrans/MidtransModule";
 
 @Module({
     imports: [
@@ -13,7 +13,7 @@ import { GuestModule } from "./modules/guests/GuestModule";
         DatabaseModule,
         BookingModule,
         GuestModule,
-        QuickbookModule,
+        MidtransModule,
     ],
 })
 export class AppModule {}
