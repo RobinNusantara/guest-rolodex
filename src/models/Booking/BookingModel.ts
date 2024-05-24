@@ -16,6 +16,7 @@ import { PayoutModel } from "../Payout/PayoutModel";
 import { UnitModel } from "../Unit/UnitModel";
 
 export enum BookingStatus {
+    Pending = "Pending",
     Confirmed = "Confirmed",
     Cancelled = "Cancelled",
 }
@@ -50,7 +51,7 @@ export class BookingModel {
         type: "enum",
         enum: BookingStatus,
         enumName: "booking_status",
-        default: BookingStatus.Confirmed,
+        default: BookingStatus.Pending,
         nullable: false,
     })
     status: BookingStatus;
