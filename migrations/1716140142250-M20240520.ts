@@ -34,8 +34,8 @@ export class M202405201716140142250 implements MigrationInterface {
                         name: "status",
                         type: "enum",
                         enumName: "booking_status",
-                        enum: ["Confirmed", "Cancelled"],
-                        default: "'Confirmed'",
+                        enum: ["Pending", "Confirmed", "Cancelled"],
+                        default: "'Pending'",
                         isNullable: false,
                     },
                     {
