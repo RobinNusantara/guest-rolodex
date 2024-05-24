@@ -1,26 +1,33 @@
 import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
+import { EntityManager } from "typeorm";
+/** Dtos */
 import { InsertBookingDto } from "src/dtos/Booking/InsertBookingDto";
-import { BookingModel } from "src/models/Booking/BookingModel";
-import { BookingToUnitModel } from "src/models/Booking/BookingToUnitModel";
-import { GuestModel } from "src/models/Guest/GuestModel";
+/** Services */
+import { GuestService } from "src/modules/guests/services/GuestService";
 import { QuickbookService } from "src/modules/quickbook/services/QuicbookService";
-import { EntityManager, Repository } from "typeorm";
+/** Repositories */
+import { BookingToUnitRepository } from "../repositories/BookingToUnitRepository";
+import { BookingRepository } from "../repositories/BookingRepository";
 
 @Injectable()
 export class BookingService {
     constructor(
         private readonly entityManager: EntityManager,
-        @InjectRepository(BookingModel)
-        private readonly bookingRepository: Repository<BookingModel>,
-        @InjectRepository(GuestModel)
-        private readonly guestRepository: Repository<GuestModel>,
-        @InjectRepository(BookingToUnitModel)
-        private readonly bookingToUnitRepository: Repository<BookingToUnitModel>,
+        /** Repositories */
+        private readonly bookingRepository: BookingRepository,
+        private readonly bookingToUnitRepository: BookingToUnitRepository,
+        /** Services */
+        private readonly guestService: GuestService,
         private readonly quickbookService: QuickbookService,
     ) {}
 
     public async insertBooking(body: InsertBookingDto): Promise<any> {
+        const guest = await this.guestService.findOrCreateGuest({
+            name: body.guest.name,
+            email: body.guest.email,
+            phoneNumber: body.guest.phoneNumber,
+        });
+
         return body;
     }
 

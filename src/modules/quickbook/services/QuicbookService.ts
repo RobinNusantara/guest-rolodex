@@ -1,12 +1,10 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { Cron, CronExpression } from "@nestjs/schedule";
-import { InjectRepository } from "@nestjs/typeorm";
 import axios from "axios";
 import * as OAuthClient from "intuit-oauth";
 import { IMakeApiCall } from "src/common/interfaces/IMakeApiCall";
-import { QuickbookModel } from "src/models/Quickbook/QuicbookModel";
-import { Repository } from "typeorm";
+import { QuicbookRepository } from "../repositories/QuickbookRepository";
 
 @Injectable()
 export class QuickbookService {
@@ -14,8 +12,7 @@ export class QuickbookService {
     private readonly logger = new Logger(QuickbookService.name);
 
     constructor(
-        @InjectRepository(QuickbookModel)
-        private readonly quickbookRepository: Repository<QuickbookModel>,
+        private readonly quickbookRepository: QuicbookRepository,
         private readonly configService: ConfigService,
     ) {}
 

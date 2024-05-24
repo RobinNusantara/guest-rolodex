@@ -2,9 +2,9 @@ import { Module } from "@nestjs/common";
 import { BookingModule } from "./modules/bookings/BookingModule";
 import { DatabaseModule } from "./infrastructures/database/DatabaseModule";
 import { ConfigModule } from "@nestjs/config";
-import { PayoutModule } from "./modules/payouts/PayoutModule";
 import { QuickbookModule } from "./modules/quickbook/QuickbookModule";
 import { ScheduleModule } from "@nestjs/schedule";
+import { GuestModule } from "./modules/guests/GuestModule";
 
 @Module({
     imports: [
@@ -12,7 +12,7 @@ import { ScheduleModule } from "@nestjs/schedule";
         ConfigModule.forRoot({ isGlobal: true }),
         DatabaseModule,
         BookingModule,
-        PayoutModule,
+        GuestModule,
         QuickbookModule,
     ],
 })

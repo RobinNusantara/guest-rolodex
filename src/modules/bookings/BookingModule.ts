@@ -1,23 +1,34 @@
 import { Module } from "@nestjs/common";
-import { BookingController } from "./controllers/BookingController";
-import { BookingService } from "./services/BookingService";
 import { TypeOrmModule } from "@nestjs/typeorm";
+/** Models */
 import { BookingModel } from "src/models/Booking/BookingModel";
-import { GuestModel } from "src/models/Guest/GuestModel";
 import { BookingToUnitModel } from "src/models/Booking/BookingToUnitModel";
+/** Repositories */
+import { BookingRepository } from "./repositories/BookingRepository";
+import { GuestRepository } from "../guests/repositories/GuestRepository";
+import { BookingToUnitRepository } from "./repositories/BookingToUnitRepository";
+import { QuicbookRepository } from "../quickbook/repositories/QuickbookRepository";
+/** Services */
+import { BookingService } from "./services/BookingService";
 import { QuickbookService } from "../quickbook/services/QuicbookService";
-import { QuickbookModel } from "src/models/Quickbook/QuicbookModel";
+import { GuestService } from "../guests/services/GuestService";
+/** Controllers */
+import { BookingController } from "./controllers/BookingController";
 
 @Module({
-    imports: [
-        TypeOrmModule.forFeature([
-            BookingModel,
-            GuestModel,
-            BookingToUnitModel,
-            QuickbookModel,
-        ]),
+    imports: [TypeOrmModule.forFeature([BookingModel, BookingToUnitModel])],
+    exports: [BookingService],
+    providers: [
+        /** Services */
+        BookingService,
+        GuestService,
+        QuickbookService,
+        /** Repositories */
+        BookingRepository,
+        BookingToUnitRepository,
+        GuestRepository,
+        QuicbookRepository,
     ],
     controllers: [BookingController],
-    providers: [BookingService, QuickbookService],
 })
 export class BookingModule {}
